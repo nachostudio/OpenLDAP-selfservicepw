@@ -1,24 +1,21 @@
-FROM debian:stable-slim
+FROM nimmis/apache:14.04
 MAINTAINER creecros <creecros@gmail.com>                                                                                                                 
 
-ENV APACHE_RUN_USER www-data                                                                                                                             
-ENV APACHE_RUN_GROUP www-data                                                                                                                            
-ENV APACHE_LOG_DIR /var/log/apache2                                                                                                                      
-ENV APACHE_LOCK_DIR /var/lock/apache2                                                                                                                    
-ENV APACHE_PID_FILE /var/run/apache2.pid 
+# disable interactive functions
+ENV DEBIAN_FRONTEND noninteractive
 
-CMD ["bash"]
+RUN apt-get update && \
+apt-get install -y php5 libapache2-mod-php5  \
+php5-fpm php5-cli php5-mysqlnd php5-pgsql php5-sqlite php5-redis \
+php5-apcu php5-intl php5-imagick php5-ldap php5-mbstring php5-mcrypt php5-json php5-gd php5-curl && \
+php5enmod mcrypt && \
+php5enmod mbstring && \
+rm -rf /var/lib/apt/lists/* && \
+cd /tmp && curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 
-COPY ltb-project.list /etc/apt/sources.list.d/ltb-project.list
-
-RUN apt-get update
-RUN apt-get -y install wget
-RUN wget -O - https://ltb-project.org/wiki/lib/RPM-GPG-KEY-LTB-project | sudo apt-key add -
-RUN apt-get update
-RUN apt-get -y install apache2 php5 php5-ldap php5-mcrypt self-service-password
-RUN a2enmod php5                                                                                                                                         
-RUN a2enmod rewrite
-
-WORKDIR /
+RUN wget http://ltb-project.org/archives/ltb-project-self-service-password-1.1.tar.gz && \
+tar zxvf ltb-project-self-service-password-1.1.tar.gz && \
+mv ltb-project-self-service-password-1.1 /usr/local/self-service-password && \
+rm ltb-project-self-service-password-1.1.tar.gz
 
 EXPOSE 8080
