@@ -50,4 +50,4 @@ $ldap_filter = "(&(objectClass=person)(uid={login}))";
 ```
 The string ```{login}``` is replaced by submitted login.
 
-**_For more info on Self Service Password visit https://github.com/ltb-project/self-service-password
+**_For more info on Self Service Password visit https://github.com/ltb-project/self-service-password_**
