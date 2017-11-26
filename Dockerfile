@@ -14,6 +14,7 @@ cd /tmp && curl -sS https://getcomposer.org/installer | php && mv composer.phar 
 
 RUN wget http://ltb-project.org/archives/ltb-project-self-service-password-1.1.tar.gz && \
 tar zxvf ltb-project-self-service-password-1.1.tar.gz && \
-mv ltb-project-self-service-password-1.1 /var/www/html && \
-rm ltb-project-self-service-password-1.1.tar.gz && \
-rm /var/www/html/index.html
+mv ltb-project-self-service-password-1.1 /var/www && \
+rm -r /var/www/html && \
+mv /var/www/ltb-project-self-service-password-1.1 /var/www/html && \
+rm ltb-project-self-service-password-1.1.tar.gz
