@@ -3,7 +3,7 @@
 
 Usage:
 ```
-docker run -p 80:80 creecros/OpenLDAP-selfservicepw
+docker run -p 80:80 creecros/openldap-selfservicepw
 ```
 
 **Once running, you will need to setup the config file to connect to your OpenLDAP server.
